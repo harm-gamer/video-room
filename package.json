@@ -2,8 +2,9 @@
   "version": "1.0.0",
   "scripts": {
     "frontend": "cd frontend && npm run dev",  
-    "backend": "cd backend && npm run dev",  
-    "build": "concurrently \"npm run frontend\" \"npm run backend\"" 
+    "backend": "cd backend && npm run dev", 
+    "build" : "npm install && npm install --prefix frontend && npm run build --prefix frontend", 
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\"" 
   },
   "devDependencies": {
     "concurrently": "^9.0.1"
