@@ -13,6 +13,7 @@ export const Room = ({
     localAudioTrack: MediaStreamTrack | null,
     localVideoTrack: MediaStreamTrack | null,
 }) => {
+
     const [searchParams, setSearchParams] = useSearchParams();
     const[inputMessage,setInputMessage] = useState('')
     const [lobby, setLobby] = useState(true);
@@ -28,6 +29,7 @@ export const Room = ({
     setInputMessage(event.targt.value)
     console.log(inputMessage)
   }
+  
     useEffect(() => {
         const socket = io(URL);
         socket.on('send-offer', async ({roomId}) => {
