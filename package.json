@@ -3,7 +3,7 @@
   "scripts": {
     "frontend": "cd frontend && npm run dev",  
     "backend": "cd backend && npm run dev", 
-    "build" : "npm install && npm install --prefix frontend && npm run build --prefix frontend", 
+    "build" : "npm install", 
     "dev": "concurrently \"npm run frontend\" \"npm run backend\"" 
   },
   "devDependencies": {
