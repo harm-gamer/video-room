@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createRoutesFromChildren, useSearchParams } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
-import "./Room.css"
 const URL = "http://localhost:3000";
 
 export const Room = ({
@@ -205,25 +204,47 @@ export const Room = ({
         }
     }, [localVideoRef])
 
-    return <div className="main-container">
-         <p>{name}Welcome to my omegle</p>
-        Hi {name}
-        <div className="container">
-        <div className="video">
-        <video autoPlay width={400} height={400} ref={localVideoRef} id="sender-video" />
-        {lobby ? "Waiting to connect you to someone" : null}
-        <video autoPlay width={400} height={400} ref={remoteVideoRef} id="receiver-video" />
+    return <div className="w-full font-mono text-white">
+    <div className="grid grid-cols-2">
+        <div
+            className="h-screen flex justify-center"
+        >
+            <div className="grid place-items-center">
+                <video className="rounded-lg" autoPlay width={500} height={500} ref={localVideoRef} />
+                {lobby ? "waiting to connect to others" : null}
+                <video className="rounded-lg" autoPlay width={500} height={500} ref={remoteVideoRef} />
+            </div>
         </div>
-        <div className="chat-box">
-        <form id="form" action="">
-      <input id="input" autoComplete="off"/><button>Send</button>
-    </form>
+        <div
+            className="grid h-screen"
+        >
+            <div className="h-screen p-5">
+                <div className="border border-gray-200 rounded-lg shadow"
+                    style={{ "height": "85vh" }}
+                >
+                    <div className="p-3 grid gap-3">
+                        <span className="text-4xl font-semibold text-green-500 mb-10">Hi {name}</span>
+                        <span>chat</span>
+                        <span>chat</span>
+                        <span>chat</span>
+                        <span>chat</span>
+                        <span>chat</span>
+                    </div>
+                </div >
+                <div className="flex justify-center mt-6">
+                    <div className="flex gap-5">
+                        <form style={{"width" : "100%"}}>
+                            <div className="relative">
+                                <input style={{"width" : "100%"}} type="search" id="default-search" className="block p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Send Message...." required />
+                                    <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        </div> 
-       
-        
-        
     </div>
+</div>
 }
 
 export default Room
