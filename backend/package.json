@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "express": "^4.21.0",
+    "my-project": "file:..",
     "socket.io": "^4.8.0"
   }
 }
