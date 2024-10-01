@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { createRoutesFromChildren, useSearchParams } from "react-router-dom";
+
 import { Socket, io } from "socket.io-client";
 const URL = "http://localhost:3000";
 
@@ -13,8 +13,8 @@ export const Room = ({
     localVideoTrack: MediaStreamTrack | null,
 }) => {
 
-    const [searchParams, setSearchParams] = useSearchParams();
-    const[inputMessage,setInputMessage] = useState('')
+    // const [searchParams, setSearchParams] = useSearchParams();
+    
     const [lobby, setLobby] = useState(true);
     const [socket, setSocket] = useState<null | Socket>(null);
     const [sendingPc, setSendingPc] = useState<null | RTCPeerConnection>(null);
@@ -22,13 +22,10 @@ export const Room = ({
     const [remoteVideoTrack, setRemoteVideoTrack] = useState<MediaStreamTrack | null>(null);
     const [remoteAudioTrack, setRemoteAudioTrack] = useState<MediaStreamTrack | null>(null);
     const [remoteMediaStream, setRemoteMediaStream] = useState<MediaStream | null>(null);
-    const remoteVideoRef = useRef<HTMLVideoElement>();
-    const localVideoRef = useRef<HTMLVideoElement>();
-  const changeHandler = (event : any) =>{
-    setInputMessage(event.targt.value)
-    console.log(inputMessage)
-  }
-  
+    const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
+    const localVideoRef = useRef<HTMLVideoElement | null>(null);
+ 
+  console.log(socket,sendingPc,receivingPc,remoteVideoTrack,remoteAudioTrack,remoteMediaStream);
     useEffect(() => {
         const socket = io(URL);
         socket.on('send-offer', async ({roomId}) => {
@@ -87,8 +84,8 @@ export const Room = ({
             setRemoteMediaStream(stream);
             // trickle ice 
             setReceivingPc(pc);
-            window.pcr = pc;
-            pc.ontrack = (e) => {
+            // window.pcr = pc;
+            pc.ontrack = () => {
                 alert("ontrack");
                 // console.error("inside ontrack");
                 // const {track, type} = e;
@@ -153,7 +150,7 @@ export const Room = ({
             }, 5000)
         });
 
-        socket.on("answer", ({roomId, sdp: remoteSdp}) => {
+        socket.on("answer", ({ sdp: remoteSdp}) => {
             setLobby(false);
             setSendingPc(pc => {
                 pc?.setRemoteDescription(remoteSdp)
